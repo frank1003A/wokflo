@@ -10,6 +10,14 @@ import routerProvider from "@refinedev/nextjs-router";
 
 import { dataProvider } from "@providers/data-provider";
 import "@styles/global.css";
+import {
+  File,
+  Home,
+  LayoutDashboard,
+  Settings,
+  SquareCheckBig,
+  Users,
+} from "lucide-react";
 
 type RefineContextProps = {};
 
@@ -104,34 +112,52 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
           authProvider={authProvider}
           resources={[
             {
-              name: "lists",
-              list: "/lists",
-              create: "/lists/create",
+              name: "home",
+              list: "/",
+              /**  create: "/lists/create",
               edit: "/lists/edit/:id",
-              show: "/lists/show/:id",
+              show: "/lists/show/:id", */
               meta: {
+                icon: <Home />,
                 canDelete: true,
               },
             },
             {
-              name: "blog_posts",
-              list: "/blog-posts",
-              create: "/blog-posts/create",
+              name: "dashboard",
+              list: "/dashboard",
+              /**create: "/blog-posts/create",
               edit: "/blog-posts/edit/:id",
-              show: "/blog-posts/show/:id",
+              show: "/blog-posts/show/:id", */
               meta: {
+                icon: <LayoutDashboard />,
                 canDelete: true,
               },
             },
             {
-              name: "categories",
-              list: "/categories",
-              create: "/categories/create",
+              name: "projects",
+              list: "/projects",
+              /** create: "/categories/create",
               edit: "/categories/edit/:id",
-              show: "/categories/show/:id",
+              show: "/categories/show/:id", */
               meta: {
+                icon: <File />,
                 canDelete: true,
               },
+            },
+            {
+              name: "tasks",
+              list: "/tasks",
+              meta: { icon: <SquareCheckBig /> },
+            },
+            {
+              name: "members",
+              list: "/members",
+              meta: { icon: <Users /> },
+            },
+            {
+              name: "settings",
+              list: "/settings",
+              meta: { icon: <Settings /> },
             },
           ]}
           options={{
