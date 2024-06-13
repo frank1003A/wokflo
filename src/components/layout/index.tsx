@@ -2,16 +2,15 @@
 
 import LeftBar from "@components/Bar";
 import { PropsWithChildren } from "react";
-import { Breadcrumb } from "../breadcrumb";
 
 export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
-    <div className="flex w-full h-screen">
+    <main className="flex w-full h-screen bg-[#161719]">
       <LeftBar />
-      <div className="content">
-        <Breadcrumb />
+      <div className="content w-full bg-[#1f2125] rounded-tl-3xl border-l-2 border-t-2 border-[#33353b]">
+        {/**<Breadcrumb /> */}
         <div>{children}</div>
       </div>
-    </div>
+    </main>
   );
 };
