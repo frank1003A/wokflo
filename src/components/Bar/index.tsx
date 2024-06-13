@@ -1,20 +1,7 @@
-import { useTable } from "@refinedev/core";
 import Link from "next/link";
-import Skeleton from "react-loading-skeleton";
 
 const LeftBar = () => {
-  const {
-    tableQueryResult: { data, isLoading: isListLoading },
-  } = useTable({ resource: "lists" });
-
-  const {
-    tableQueryResult: { data: ws },
-  } = useTable({ resource: "workspaces" });
-
-  const nu = [11, 3, 4, 4, 3];
-
-  const List = data?.data;
-  const wS = ws?.data;
+  const List = ["test"];
   return (
     <div className="max-w-[280px] w-full h-full bg-[#161719] px-5">
       <Link href={"/"}>
@@ -22,13 +9,9 @@ const LeftBar = () => {
       </Link>
 
       <ul className="flex flex-col">
-        {isListLoading ? (
-          <Skeleton className="h-10" count={5} />
-        ) : (
-          List?.map((list, index) => {
-            return <li key={list.title}>{list.title}</li>;
-          })
-        )}
+        {List?.map((list, index) => {
+          return <li key={list}>{list}</li>;
+        })}
       </ul>
 
       {/**
