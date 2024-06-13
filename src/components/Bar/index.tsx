@@ -1,6 +1,5 @@
-import { ListDragButton, WsDragButton } from "@components/DragDrop";
-import { List, Workspace } from "@prisma/client";
 import { useTable } from "@refinedev/core";
+import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
 
 const LeftBar = () => {
@@ -17,8 +16,25 @@ const LeftBar = () => {
   const List = data?.data;
   const wS = ws?.data;
   return (
-    <div className="max-w-[280px] w-full h-full bg-stone-50 px-5">
-      <h1 className="font-bold">Private</h1>
+    <div className="max-w-[280px] w-full h-full bg-[#161719] px-5">
+      <Link href={"/"}>
+        <h1 className="font-bold">Logo</h1>
+      </Link>
+
+      <ul className="flex flex-col">
+        {isListLoading ? (
+          <Skeleton className="h-10" count={5} />
+        ) : (
+          List?.map((list, index) => {
+            return <li key={list.title}>{list.title}</li>;
+          })
+        )}
+      </ul>
+
+      {/**
+       * <Link href={"/"}>
+        <h1 className="font-bold">Logo</h1>
+      </Link>
 
       <ul className="flex flex-col">
         {isListLoading ? (
@@ -45,6 +61,7 @@ const LeftBar = () => {
           );
         })}
       </ul>
+       */}
     </div>
   );
 };
