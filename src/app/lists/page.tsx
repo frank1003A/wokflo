@@ -1,5 +1,4 @@
 "use client";
-import { useTable } from "@refinedev/core";
 import { RiDraggable } from "react-icons/ri";
 
 const ListHeader = (list: any) => {
@@ -28,11 +27,11 @@ const TaskComponent = () => {
 };
 
 export default function HomePageLists() {
-  const {
+  /**const {
     tableQueryResult: { data, isLoading, error },
   } = useTable();
 
-  const Lists = data?.data;
+  const Lists = data?.data; */
 
   return (
     <>
