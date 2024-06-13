@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String          @id @default(auto()) @map("_id") @db.ObjectId
+  username     String          @unique
+  email        String          @unique
+  passwordHash String
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  workspaces   WorkspaceUser[]
+  tasks        TaskAssignee[]
+}
+
+model Workspace {
+  id        String          @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  users     WorkspaceUser[]
+  lists     List[]
+  variant     StyleVariant @default(emoji)
+  emoji       String?
+  color       String?
+}
+
+model WorkspaceUser {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  workspaceId String    @db.ObjectId
+  userId      String    @db.ObjectId
+  workspace   Workspace @relation(fields: [workspaceId], references: [id])
+  user        User      @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([workspaceId, userId])
+}
+
+model List {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  workspaceId String?      @db.ObjectId
+  name        String
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  workspace   Workspace?   @relation(fields: [workspaceId], references: [id])
+  tasks       Task[]
+  tags        ListTag[]
+  variant     StyleVariant @default(emoji)
+  emoji       String?
+  color       String?
+}
+
+model Task {
+  id           String         @id @default(auto()) @map("_id") @db.ObjectId
+  listId       String         @db.ObjectId
+  title        String
+  status       TaskStatus     @default(PENDING)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now())
+  list         List           @relation(fields: [listId], references: [id])
+  TaskAssignee TaskAssignee[]
+}
+
+model Tag {
+  id    String    @id @default(auto()) @map("_id") @db.ObjectId
+  name  String    @unique
+  lists ListTag[]
+}
+
+model ListTag {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  listId String @db.ObjectId
+  tagId  String @db.ObjectId
+  list   List   @relation(fields: [listId], references: [id])
+  tag    Tag    @relation(fields: [tagId], references: [id])
+
+  @@unique([listId, tagId])
+}
+
+model TaskAssignee {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  taskId String @db.ObjectId
+  userId String @db.ObjectId
+  task   Task   @relation(fields: [taskId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([taskId, userId])
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+}
+
+enum StyleVariant {
+  emoji
+  color
+}
