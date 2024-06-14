@@ -1,11 +1,10 @@
 import { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import { Inter } from "next/font/google";
 import React, { Suspense } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import { RefineContext } from "./_refine_context";
 
-const montserrat = Montserrat({
-  weight: ["300", "400", "500", "700"],
+const montserrat = Inter({
   subsets: ["latin"],
   display: "swap",
   fallback: ["Arial", "sans-serif"],
