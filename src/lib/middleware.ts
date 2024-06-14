@@ -12,3 +12,4 @@ export async function authMiddleware(req:NextApiRequest, res:NextApiResponse, ne
   req..user = token;
   next();
 } */
+export {};
