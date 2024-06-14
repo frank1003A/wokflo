@@ -9,7 +9,7 @@ export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <main className="flex w-full h-screen bg-[#161719]">
       <LeftBar />
-      <div className="content w-full h-full bg-[#1f2125] rounded-tl-3xl border-l-2 border-t-2 border-zinc-700">
+      <div className="content w-full h-full overflow-y-auto bg-[#1f2125] rounded-tl-3xl border-l-2 border-t-2 border-zinc-700">
         {/**<Breadcrumb /> */}
         {/**<div className="w-full flex p-3">
           <Button
