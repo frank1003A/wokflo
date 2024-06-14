@@ -70,13 +70,13 @@ const DataGroup = ({
 }: AccItemExtProps) => {
   return (
     <AccordionItem
-      className="border-b-zinc-500 last-of-type:border-none"
+      className="border-b-zinc-700 last-of-type:border-none"
       value={value}
     >
       <AccordionTrigger
         onClick={expand}
         className={clsx(
-          "no-underline hover:bg-primary_hover items-center  text-sm capitalize text-zinc-500",
+          "no-underline hover:bg-primary_hover items-center  text-sm capitalize text-zinc-700",
           isCollapsed ? "px-6 lg:px-3 lg:justify-center " : "px-6 justify-start"
         )}
       >
@@ -113,7 +113,7 @@ const Data = ({
         className={clsx("flex items-center  gap-4 text-sm")}
         href={"/favorite/3232424"}
       >
-        <div className="text-zinc-500 w-6 h-6  rounded-md bg-sky-400"></div>
+        <div className="text-zinc-700 w-6 h-6  rounded-md bg-sky-400"></div>
 
         <span
           className={clsx(
@@ -192,7 +192,7 @@ const LeftBar = () => {
                   isCollapsed ? "lg:justify-center" : "justify-start"
                 )}
               >
-                <div className="text-zinc-500 h-6 w-6 flex items-center justify-center">
+                <div className="text-zinc-700 h-6 w-6 flex items-center justify-center">
                   {" "}
                   {item.icon}
                 </div>
@@ -204,7 +204,7 @@ const LeftBar = () => {
           );
         })}
       </ul>
-      <Separator className="border-t border-t-zinc-500" />
+      <Separator className="border-t border-t-zinc-700" />
       {/** Favorite */}
       <Accordion type="single" collapsible>
         <DataGroup
