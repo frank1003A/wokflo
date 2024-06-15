@@ -118,7 +118,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
               edit: "/lists/edit/:id",
               show: "/lists/show/:id", */
               meta: {
-                icon: <Home className="h-6 w-6" />,
+                icon: <Home className="h-5 w-5" />,
                 canDelete: true,
               },
             },
@@ -129,7 +129,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
               edit: "/blog-posts/edit/:id",
               show: "/blog-posts/show/:id", */
               meta: {
-                icon: <LayoutDashboard className="h-6 w-6" />,
+                icon: <LayoutDashboard className="h-5 w-5" />,
                 canDelete: true,
               },
             },
@@ -140,24 +140,24 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
               edit: "/categories/edit/:id",
               show: "/categories/show/:id", */
               meta: {
-                icon: <File className="h-6 w-6" />,
+                icon: <File className="h-5 w-5" />,
                 canDelete: true,
               },
             },
             {
               name: "tasks",
               list: "/tasks",
-              meta: { icon: <SquareCheckBig className="h-6 w-6" /> },
+              meta: { icon: <SquareCheckBig className="h-5 w-5" /> },
             },
             {
               name: "members",
               list: "/members",
-              meta: { icon: <Users className="h-6 w-6" /> },
+              meta: { icon: <Users className="h-5 w-5" /> },
             },
             {
               name: "settings",
               list: "/settings",
-              meta: { icon: <Settings className="h-6 w-6" /> },
+              meta: { icon: <Settings className="h-5 w-5" /> },
             },
           ]}
           options={{
