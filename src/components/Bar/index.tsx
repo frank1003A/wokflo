@@ -76,7 +76,7 @@ const DataGroup = ({
       <AccordionTrigger
         onClick={expand}
         className={clsx(
-          "no-underline hover:bg-primary_hover items-center  text-sm capitalize text-zinc-700",
+          "no-underline hover:bg-primary_hover items-center  text-sm capitalize text-primary_text",
           isCollapsed ? "px-6 lg:px-3 lg:justify-center " : "px-6 justify-start"
         )}
       >
@@ -187,16 +187,21 @@ const LeftBar = () => {
               <Link
                 href={item.route as string}
                 className={clsx(
-                  "transition-all hover:bg-primary_hover  p-3 flex items-center justify-start gap-3 text-sm capitalize text-white font-bold w-full",
+                  "group transition-all hover:bg-primary_hover  p-3 flex items-center justify-start gap-3 text-sm capitalize text-white font-bold w-full",
                   isCollapsed ? "px-6 lg:px-3" : "px-6",
                   isCollapsed ? "lg:justify-center" : "justify-start"
                 )}
               >
-                <div className="text-zinc-700 h-6 w-6 flex items-center justify-center">
+                <div className="group-hover:text-purple-900 text-primary_text h-6 w-6 flex items-center justify-center">
                   {" "}
                   {item.icon}
                 </div>
-                <span className={clsx(isCollapsed ? "lg:hidden" : "")}>
+                <span
+                  className={clsx(
+                    "group-hover:text-purple-900",
+                    isCollapsed ? "lg:hidden" : ""
+                  )}
+                >
                   {item.name}
                 </span>
               </Link>
