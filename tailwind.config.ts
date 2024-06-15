@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      textColor: {
+        primary_text: "#5c5d5f",
+      },
       colors: {
         primary_hover: "#202125",
         border: "hsl(var(--border))",
