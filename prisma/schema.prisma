@@ -1,0 +1,154 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  username      String?        @unique
+  firstName     String?
+  lastName      String?
+  role          String?
+  email         String         @unique
+  passwordHash  String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+  projects      ProjectUser[]
+  ownedProjects Project[] // Reference to projects owned by this user
+  tasks         Task[] // Reference to tasks owned by this user
+  taskAssignees TaskAssignee[] // Reference to tasks the user is assigned to
+}
+
+model Account {
+  id                 String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String    @db.ObjectId
+  providerType       String
+  providerId         String
+  providerAccountId  String
+  refreshToken       String?
+  accessToken        String?
+  accessTokenExpires DateTime?
+  user               User      @relation(fields: [userId], references: [id])
+
+  @@unique([providerId, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId       String   @db.ObjectId
+  sessionToken String   @unique
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id])
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+}
+
+model Project {
+  id        String        @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  ownerId   String        @db.ObjectId
+  owner     User          @relation(fields: [ownerId], references: [id]) // Reference to the owner of the project
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @default(now())
+  users     ProjectUser[]
+  tasks     Task[]
+  files     File[]
+  variant   StyleVariant  @default(emoji)
+  emoji     String?
+  color     String?
+}
+
+model ProjectUser {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  projectId String      @db.ObjectId
+  userId    String      @db.ObjectId
+  project   Project     @relation(fields: [projectId], references: [id])
+  user      User        @relation(fields: [userId], references: [id])
+  role      ProjectRole @default(USER)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@unique([projectId, userId])
+}
+
+model Task {
+  id        String         @id @default(auto()) @map("_id") @db.ObjectId
+  projectId String?        @db.ObjectId // Make projectId optional
+  ownerId   String         @db.ObjectId // Add ownerId to reference the user who owns the task
+  title     String
+  status    TaskStatus     @default(PENDING)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @default(now())
+  project   Project?       @relation(fields: [projectId], references: [id])
+  owner     User           @relation(fields: [ownerId], references: [id]) // Relation to the owner of the task
+  assignees TaskAssignee[]
+  files     File[]
+  tags      TaskTag[]
+}
+
+model Tag {
+  id    String    @id @default(auto()) @map("_id") @db.ObjectId
+  name  String    @unique
+  tasks TaskTag[]
+}
+
+model TaskTag {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  taskId String @db.ObjectId
+  tagId  String @db.ObjectId
+  task   Task   @relation(fields: [taskId], references: [id])
+  tag    Tag    @relation(fields: [tagId], references: [id])
+
+  @@unique([taskId, tagId])
+}
+
+model TaskAssignee {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  taskId String @db.ObjectId
+  userId String @db.ObjectId
+  task   Task   @relation(fields: [taskId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([taskId, userId])
+}
+
+model File {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  url       String
+  name      String
+  mimeType  String
+  size      Int
+  createdAt DateTime @default(now())
+  taskId    String?  @db.ObjectId
+  projectId String?  @db.ObjectId
+  task      Task?    @relation(fields: [taskId], references: [id])
+  project   Project? @relation(fields: [projectId], references: [id])
+}
+
+enum TaskStatus {
+  PENDING
+  COMPLETED
+}
+
+enum StyleVariant {
+  emoji
+  color
+}
+
+enum ProjectRole {
+  OWNER
+  ADMIN
+  USER
+}

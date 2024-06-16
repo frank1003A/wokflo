@@ -8,6 +8,7 @@ import React from "react";
 
 import routerProvider from "@refinedev/nextjs-router";
 
+import Loading from "@components/loading/Loading";
 import { dataProvider } from "@providers/data-provider";
 import "@styles/global.css";
 import {
@@ -38,20 +39,30 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
   const to = usePathname();
 
   if (status === "loading") {
-    return <span>loading...</span>;
+    return <Loading />;
   }
 
   const authProvider: AuthProvider = {
-    login: async () => {
-      signIn("auth0", {
-        callbackUrl: to ? to.toString() : "/",
+    login: async ({ email, password, redirectPath }) => {
+      const res = await signIn("credentials", {
         redirect: true,
+        callbackUrl: to ? to.toString() : "/",
+        email,
+        password,
       });
-
+      if (res?.error) {
+        return Promise.reject(res.error);
+      }
       return {
         success: true,
+        redirectTo: redirectPath,
+        successNotification: {
+          message: "Login Successful",
+          description: "You have successfully logged in.",
+        },
       };
     },
+
     logout: async () => {
       signOut({
         redirect: true,
@@ -93,6 +104,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
         const { user } = data;
         return {
           name: user.name,
+          email: user.email,
           avatar: user.image,
         };
       }

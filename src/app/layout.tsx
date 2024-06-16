@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="light">
-      <body className={montserrat.className}>
+      <body className={montserrat.className + "h-screen"}>
         <Suspense>
           <RefineContext>{children}</RefineContext>
         </Suspense>
