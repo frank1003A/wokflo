@@ -59,6 +59,7 @@ model VerificationToken {
 model Project {
   id        String        @id @default(auto()) @map("_id") @db.ObjectId
   name      String
+  description String?
   ownerId   String        @db.ObjectId
   status    ProjectStatus @default(According_to_plan)
   owner     User          @relation(fields: [ownerId], references: [id])

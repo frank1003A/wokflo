@@ -1,5 +1,7 @@
 "use client";
 
+import { Toaster } from "@components/ui/toaster";
+import { useToast } from "@components/ui/use-toast";
 import { useLogin } from "@refinedev/core";
 import Image from "next/image";
 import Link from "next/link";
@@ -7,6 +9,7 @@ import logo from "../../assets/logo.png";
 
 export default function Login() {
   const { mutate: login } = useLogin();
+  const { toast } = useToast();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,8 +18,14 @@ export default function Login() {
       email: e.currentTarget.email.value,
       password: e.currentTarget.password.value,
     };
-    console.log(values);
-    login(values);
+    login(values, {
+      onSuccess(data, variables, context) {
+        toast({
+          description: "Successful Login",
+          className: "border text-white",
+        });
+      },
+    });
   };
 
   return (
@@ -88,6 +97,7 @@ export default function Login() {
           </a>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }

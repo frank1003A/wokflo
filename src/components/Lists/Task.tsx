@@ -66,7 +66,7 @@ const SingleTask = ({ task, id }: { task: Task; id: string }) => {
             <AvatarImage src="https://avatar.iran.liara.run/public" />
           </Avatar>
         </div>
-        <span className="text-sm font-bold bg-red-100 text-red-950 p-1 rounded-sm">
+        <span className="hidden lg:flex text-sm font-bold bg-red-100 text-red-950 p-1 rounded-sm">
           Today
         </span>
         <IconButton icon={<EllipsisVertical />} tip="Actions" />

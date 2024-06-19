@@ -38,7 +38,7 @@ export const ViewCard = ({ icon, text, value, ...rest }: ViewCardProps) => {
       <span className="absolute bg-sky-600 w-5 h-5 top-3 blur-xl"></span>
       <div className="flex items-center gap-2 ">
         <span>{icon}</span>
-        <span className="text-sm">{text}</span>
+        <span className="text-sm capitalize">{text}</span>
       </div>
       <div>{value}</div>
     </Card>

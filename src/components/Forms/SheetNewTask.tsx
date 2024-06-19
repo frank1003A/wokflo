@@ -13,8 +13,8 @@ const SheetNewTask = ({ children }: { children: ReactNode }) => {
   return (
     <Sheet>
       <SheetTrigger>{children}</SheetTrigger>
-      <SheetContent className="bg-wokflow_bg">
-        <SheetHeader className="*:text-white">
+      <SheetContent className="bg-wokflow_bg overflow-y-auto w-full lg:w-fit">
+        <SheetHeader className="*:text-white ">
           <SheetTitle>New Task</SheetTitle>
           <SheetDescription>
             Create and add minimal files. Click save when you&apos;re done.

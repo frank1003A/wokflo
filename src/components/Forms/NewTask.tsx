@@ -34,7 +34,6 @@ const NewTask = () => {
         values: {
           title: values.tasktitle,
           projectId: value,
-          ownerId: user?.id,
         },
         successNotification: (data, values, resource) => {
           return {
@@ -48,7 +47,7 @@ const NewTask = () => {
         onSuccess: (data, variables, context) => {
           toast({
             description: `Task ${values.tasktitle} Created `,
-            className: "border text-white bg-green-700",
+            className: "border text-white bg-green-700 left-12",
           });
           setOpen(false);
         },

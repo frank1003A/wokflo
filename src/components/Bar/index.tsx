@@ -149,7 +149,7 @@ const LeftBar = () => {
       className={clsx(
         "transition-all h-screen overflow-y-auto scrollbar-hide max-w-[250px] w-full bg-[#161719] py-6",
         isCollapsed ? "w-full translate-x-0 lg:w-[60px]" : "-translate-x-full",
-        "fixed lg:translate-x-0 lg:sticky lg:top-0"
+        "fixed lg:translate-x-0 lg:sticky lg:top-0 z-50"
       )}
     >
       <div
@@ -259,7 +259,12 @@ const LeftBar = () => {
           <Data name="StrataScratch" isCollapsed={isCollapsed} />
         </DataGroup>
       </Accordion>
-      <button onClick={() => signOut()}>Log Out</button>
+      <button
+        className="bg-sky-600 w-full h-[60px] text-white"
+        onClick={() => signOut()}
+      >
+        Log Out
+      </button>
     </aside>
   );
 };

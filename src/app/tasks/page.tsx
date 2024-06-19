@@ -21,7 +21,7 @@ const TasksList = () => {
 
       <HeaderComponent />
       <Separator className="bg-zinc-700" />
-      <main className="flex flex-col gap-4 mt-5 px-8 lg:px-24">
+      <main className="flex flex-col gap-4 mt-5 px-6 lg:px-24">
         <div className=" *:text-white my-3">
           <Breadcrumb>
             <BreadcrumbList>

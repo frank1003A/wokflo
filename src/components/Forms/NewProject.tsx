@@ -3,11 +3,11 @@
 import { Button } from "@components/ui/button";
 import { Input } from "@components/ui/input";
 import { Label } from "@components/ui/label";
+import { Textarea } from "@components/ui/textarea";
 import { Toaster } from "@components/ui/toaster";
 import { useToast } from "@components/ui/use-toast";
 import { useCreate, useNavigation } from "@refinedev/core";
 import clsx from "clsx";
-import Select from "react-select";
 
 type IIdentity = {
   id: number;
@@ -25,6 +25,7 @@ const NewProject = () => {
 
     const values = {
       name: e.currentTarget.projectname.value,
+      description: e.currentTarget.projectdec.value,
     };
 
     mutateProject(
@@ -32,6 +33,7 @@ const NewProject = () => {
         resource: "/projects",
         values: {
           name: values.name,
+          description: values.description,
         },
         successNotification: (data, values, resource) => {
           return {
@@ -45,7 +47,7 @@ const NewProject = () => {
         onSuccess: (data, variables, context) => {
           toast({
             description: `Project ${values.name} Created `,
-            className: "border text-white bg-green-700",
+            className: "border text-white bg-green-700 left-12",
           });
           list("/projects");
         },
@@ -73,6 +75,15 @@ const NewProject = () => {
         placeholder="project name"
         className="placeholder:text-primary_text placeholder:capitalize mt-2"
       />
+      <div className="mt-6">
+        <Label htmlFor="projectdesc">Project Description</Label>
+        <Textarea
+          id="projectdesc"
+          name="projectdesc"
+          placeholder="project description"
+          className="placeholder:text-primary_text placeholder:capitalize mt-2"
+        />
+      </div>
       <div className="flex flex-col mt-6">
         <span className="font-semibold">Files: </span>
         <label
@@ -121,9 +132,11 @@ const NewProject = () => {
           />
         </label>
       </div>
-      <div>Assignees: </div>
-      <Select isMulti options={options} />
-      <Button className="bg-sky-600 mt-6 text-white" type="submit">
+
+      <Button
+        className="bg-sky-600 hover:bg-sky-600 mt-6 text-white"
+        type="submit"
+      >
         add project
       </Button>
       <Toaster />

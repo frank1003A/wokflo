@@ -13,7 +13,7 @@ const SheetNewProject = ({ children }: { children: ReactNode }) => {
   return (
     <Sheet>
       <SheetTrigger>{children}</SheetTrigger>
-      <SheetContent className="bg-wokflow_bg">
+      <SheetContent className="bg-wokflow_bg overflow-y-auto w-full lg:w-fit">
         <SheetHeader className="*:text-white">
           <SheetTitle>New Project</SheetTitle>
           <SheetDescription>

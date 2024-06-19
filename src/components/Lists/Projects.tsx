@@ -34,7 +34,7 @@ const ProjectsList = () => {
   }, [filters]);
 
   return (
-    <div className="px-6 flex flex-col sticky top-0">
+    <div className="lg:px-6 flex flex-col sticky top-0">
       <div className="flex items-center justify-start rounded-md py-3 mb-3 gap-3 w-full ">
         <div className="relative ml-auto flex-1 md:grow-0">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />

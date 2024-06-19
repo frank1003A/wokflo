@@ -30,8 +30,8 @@ const ProjectsPage = () => {
     <main className="flex flex-col w-full ">
       <HeaderComponent />
       <Separator className="bg-zinc-700" />
-      <div className="h-full w-full flex flex-col px-8 lg:px-20">
-        <div className="w-full my-5 px-5 ">
+      <div className="h-full w-full flex flex-col px-6 lg:px-20">
+        <div className="w-full my-5 lg:px-5">
           <div>
             <h1 className="text-white text-base font-bold">
               Good morning, Jenny
@@ -51,9 +51,21 @@ const ProjectsPage = () => {
             </span>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 mt-6">
-            <ViewCard icon={<PlusCircle />} text="completed task" value="32" />
-            <ViewCard icon={<PlusCircle />} text="completed task" value="32" />
-            <ViewCard icon={<PlusCircle />} text="completed task" value="32" />
+            <ViewCard
+              icon={<PlusCircle />}
+              text="completed project"
+              value="32"
+            />
+            <ViewCard
+              icon={<PlusCircle />}
+              text="rejected project"
+              value="32"
+            />
+            <ViewCard
+              icon={<PlusCircle />}
+              text="reassigned project"
+              value="32"
+            />
           </div>
         </div>
 

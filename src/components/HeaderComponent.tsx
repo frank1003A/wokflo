@@ -1,6 +1,10 @@
 "use client";
-import { Bell, MessageCircleQuestion } from "lucide-react";
+import useLayoutStore from "@zustand/store/layoutstore/store";
+import clsx from "clsx";
+import { Bell, MessageCircleQuestion, Text } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import logo from "../assets/logo.png";
 import { IconButton, SearchInput } from "./Shared";
 import { Button } from "./ui/button";
 import {
@@ -14,20 +18,28 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
 const HeaderComponent = () => {
+  const { isCollapsed, toggleCollapsed, expand, collapse } = useLayoutStore(
+    (state) => state
+  );
   return (
-    <header className="w-full flex px-8 lg:px-8 py-1  text-lg text-white font-bold">
+    <header className="w-full flex px-6 lg:px-8 py-3 lg:py-1  text-lg text-white font-bold">
       <div className="w-full items-center justify-start flex gap-2 backdrop-blur-md">
+        <Link className="mr-auto lg:hidden" href={"/"}>
+          <Image src={logo} alt="wokflo_logo" width={100} height={100} />
+        </Link>
         <div className="ml-auto flex items-center justify-end gap-4">
-          <SearchInput />
-          <IconButton icon={<MessageCircleQuestion />} />
-          <Popover>
-            <PopoverTrigger>
-              <IconButton icon={<Bell />} tip="Notification" />
-            </PopoverTrigger>
-            <PopoverContent>
-              <span>Notifications</span>
-            </PopoverContent>
-          </Popover>
+          <div className="items-center gap-3 hidden lg:flex">
+            <SearchInput />
+            <IconButton icon={<MessageCircleQuestion />} />
+            <Popover>
+              <PopoverTrigger>
+                <IconButton icon={<Bell />} tip="Notification" />
+              </PopoverTrigger>
+              <PopoverContent>
+                <span>Notifications</span>
+              </PopoverContent>
+            </Popover>
+          </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -55,6 +67,17 @@ const HeaderComponent = () => {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button
+            variant={"ghost"}
+            size={"icon"}
+            onClick={toggleCollapsed}
+            className={clsx(
+              " hover:bg-primary_hover lg:hidden hover:text-sky-600 text-white",
+              isCollapsed ? "ml-0" : "ml-auto"
+            )}
+          >
+            <Text />
+          </Button>
         </div>
       </div>
     </header>

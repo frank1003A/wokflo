@@ -36,7 +36,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
   }
 
   const authProvider: AuthProvider = {
-    login: async ({ email, password, redirectPath }) => {
+    login: async ({ email, password }) => {
       const res = await signIn("credentials", {
         redirect: false,
         callbackUrl: to ? to.toString() : "/",
@@ -48,7 +48,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
       }
       return {
         success: true,
-        redirectTo: redirectPath,
+        redirectTo: "/",
         successNotification: {
           message: "Login Successful",
           description: "You have successfully logged in.",

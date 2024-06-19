@@ -1,29 +1,53 @@
 import prisma from "@lib/db";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
+import authOptions from "../auth/[...nextauth]/options";
 
 export async function GET() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const Projects = await prisma.project.findMany({
+      where: {
+        ownerId: session.user.id,
+      },
       include: {
         tasks: true,
+        files: true,
       },
     });
-    console.log("Fetched Projects:", Projects);
-    return NextResponse.json(Projects);
+    return NextResponse.json(Projects, { status: 200 });
   } catch (error) {
-    console.error("Error fetching Projects:", error);
-    return NextResponse.json({ error: "Failed to fetch Projects" });
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
   try {
-    const data = await request.json();
-    const newProject = await prisma.project.create({ data });
-    console.log("Created NewProject:", newProject);
-    return NextResponse.json(newProject);
+    const data = await req.json();
+    const newProject = await prisma.project.create({
+      data: { ...data, ownerId: session.user.id },
+    });
+    return NextResponse.json(newProject, { status: 201 });
   } catch (error) {
-    console.error("Error creating newProject:", error);
-    return NextResponse.json({ error: "Failed to create newProject" });
+    console.error(error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
