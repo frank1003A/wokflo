@@ -10,6 +10,7 @@ import { useMenu } from "@refinedev/core";
 import useLayoutStore from "@zustand/store/layoutstore/store";
 import clsx from "clsx";
 import { Ellipsis, Plus, Text } from "lucide-react";
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -148,33 +149,27 @@ const LeftBar = () => {
       className={clsx(
         "transition-all h-screen overflow-y-auto scrollbar-hide max-w-[250px] w-full bg-[#161719] py-6",
         isCollapsed ? "w-full translate-x-0 lg:w-[60px]" : "-translate-x-full",
-        "fixed lg:translate-x-0 lg:relative"
+        "fixed lg:translate-x-0 lg:sticky lg:top-0"
       )}
     >
-      <div className="flex items-center justify-center px-6">
-        <Link className="flex items-center justify-start gap-3" href={"/"}>
-          <Image
-            className="flex items-center justify-center"
-            src={logo}
-            alt="wokflo_logo"
-            width={40}
-            height={40}
-          />
-          <div
-            className={clsx(
-              "text-sm font-bold text-white",
-              isCollapsed ? "lg:hidden" : ""
-            )}
-          >
-            WokFlo
-          </div>
+      <div
+        className={clsx(
+          "flex items-center justify-center",
+          isCollapsed ? "px-1" : "px-6"
+        )}
+      >
+        <Link className={clsx(isCollapsed ? "hidden" : "")} href={"/"}>
+          <Image src={logo} alt="wokflo_logo" width={100} height={40} />
         </Link>
 
         <Button
           variant={"ghost"}
           size={"icon"}
           onClick={toggleCollapsed}
-          className="ml-auto hover:bg-primary_hover hover:text-inherit text-white"
+          className={clsx(
+            " hover:bg-primary_hover hover:text-sky-600 text-white",
+            isCollapsed ? "ml-0" : "ml-auto"
+          )}
         >
           <Text />
         </Button>
@@ -189,16 +184,23 @@ const LeftBar = () => {
                 className={clsx(
                   "group transition-all hover:bg-primary_hover  p-3 flex items-center justify-start gap-3 text-sm capitalize text-white font-bold w-full",
                   isCollapsed ? "px-6 lg:px-3" : "px-6",
-                  isCollapsed ? "lg:justify-center" : "justify-start"
+                  isCollapsed ? "lg:justify-center" : "justify-start",
+                  selectedKey.includes(String(item.route)) &&
+                    "bg-primary_hover text-sky-600 border-l-sky-600",
+                  "border-l-2 border-l-transparent"
                 )}
               >
-                <div className="group-hover:text-purple-900 text-primary_text h-6 w-6 flex items-center justify-center">
-                  {" "}
+                <div
+                  className={clsx(
+                    "group-hover:text-sky-600 text-primary_text h-6 w-6 flex items-center justify-center",
+                    selectedKey.includes(String(item.route)) && "text-sky-600"
+                  )}
+                >
                   {item.icon}
                 </div>
                 <span
                   className={clsx(
-                    "group-hover:text-purple-900",
+                    "group-hover:text-sky-600",
                     isCollapsed ? "lg:hidden" : ""
                   )}
                 >
@@ -257,6 +259,7 @@ const LeftBar = () => {
           <Data name="StrataScratch" isCollapsed={isCollapsed} />
         </DataGroup>
       </Accordion>
+      <button onClick={() => signOut()}>Log Out</button>
     </aside>
   );
 };
