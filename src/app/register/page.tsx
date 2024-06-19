@@ -1,10 +1,7 @@
 "use client";
-import { Button } from "@components/ui/button";
 import { Toaster } from "@components/ui/toaster";
 import { useToast } from "@components/ui/use-toast";
-import { Separator } from "@radix-ui/react-separator";
 import { useCreate, useLogin } from "@refinedev/core";
-import Link from "next/link";
 
 type FormVariables = {
   email: string;
@@ -41,11 +38,11 @@ const RegisterPage = () => {
       },
       {
         onSuccess: (data, variables, context) => {
-          login(values);
           toast({
             description: "Your message has been sent.",
             className: "border text-white",
           });
+          login(values);
         },
       }
     );
@@ -53,30 +50,64 @@ const RegisterPage = () => {
 
   return (
     <div className="bg-gradient-to-tr from-wokflow_bg flex-col to-wokflow_bg/95 w-full h-screen flex items-center justify-center">
-      <div className="flex flex-col">
-        <h1>Create a wokflo account</h1>
-        <p className="text-xs">
-          Already have an account? <Link href={"/login"}>Log In</Link>
+      <div className="flex w-full max-w-sm flex-col gap-6 rounded border border-zinc-700 bg-wk_card p-6">
+        <div className="text-white">
+          <h1 className="text-xl font-bold tracking-tight">
+            Create an account
+          </h1>
+          <p className="mt-1 text-sm ">Get started with WokFlo today.</p>
+        </div>
+        <form className="grid gap-4">
+          <div className="grid gap-2">
+            <label
+              className="text-sm text-white font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className="flex text-white h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              required={true}
+              id="email"
+              autoComplete="username"
+              placeholder="team@mynaui.com"
+              type="email"
+            />
+          </div>
+          <div className="grid gap-2">
+            <label
+              className="text-sm text-white font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              htmlFor="password"
+            >
+              New Password
+            </label>
+            <input
+              className="flex text-white h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              required={true}
+              id="password"
+              placeholder="••••••••••"
+              autoComplete="current-password"
+              type="password"
+            />
+            <p className="text-sm text-white">
+              Must be at least 6 characters long.
+            </p>
+          </div>
+          <button
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-sky-600 text-primary-foreground  h-10 px-4 py-2 w-full"
+            type="submit"
+          >
+            Create Account →
+          </button>
+        </form>
+        <p className="text-sm text-white">
+          Already have an account?{" "}
+          <a className="underline" href="/login">
+            Login
+          </a>
         </p>
       </div>
-      <form className="flex flex-col" onSubmit={onSubmit}>
-        <label>Email</label>
-        <input name="email" />
-        <label>Password</label>
-        <input name="password" />
-        <button type="submit">create account</button>
-        <div className="inline-flex items-center w-full">
-          <Separator /> OR <Separator />
-        </div>
-        <div className="inline-flex items-center">
-          <Button>Sign up with Twitter</Button>
-          <Button>Sign up with Google</Button>
-        </div>
-        <p>
-          By signing up, you agree to our <a>Terms, acceptable use</a> and{" "}
-          <a>privacy policy</a>
-        </p>
-      </form>
+
       <Toaster />
     </div>
   );
