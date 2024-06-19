@@ -1,4 +1,3 @@
-import { isAuthenticated } from "@lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export const config = {
@@ -9,14 +8,11 @@ export async function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const path = url.pathname;
 
-  console.log("Middleware invoked for path:", path);
-
   if (path === "/api/auth/session") {
-    console.log("Login path detected, bypassing authentication.");
     return NextResponse.next();
   }
 
-  const authenticated = await isAuthenticated(request);
+  /**const authenticated = await isAuthenticated(request);
   console.log("Authentication status:", authenticated);
 
   if (!authenticated) {
@@ -28,5 +24,6 @@ export async function middleware(request: NextRequest) {
   }
 
   console.log("Authenticated, allowing access.");
-  return NextResponse.next();
+  return NextResponse.next(); */
+  console.log(url);
 }
