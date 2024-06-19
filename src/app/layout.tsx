@@ -4,14 +4,15 @@ import React, { Suspense } from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import { RefineContext } from "./_refine_context";
 
-const montserrat = Inter({
+const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   fallback: ["Arial", "sans-serif"],
+  preload: true,
 });
 
 export const metadata: Metadata = {
-  title: "Wokflo",
+  title: "WokFlo",
   description: "Making handling task a personalized milestone",
   icons: {
     icon: "/favicon.ico",
@@ -25,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" data-theme="light">
-      <body className={montserrat.className + "h-screen"}>
+      <body className={inter.className + " " + "h-screen"}>
         <Suspense>
           <RefineContext>{children}</RefineContext>
         </Suspense>

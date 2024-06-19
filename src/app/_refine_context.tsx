@@ -11,14 +11,7 @@ import routerProvider from "@refinedev/nextjs-router";
 import Loading from "@components/loading/Loading";
 import { dataProvider } from "@providers/data-provider";
 import "@styles/global.css";
-import {
-  File,
-  Home,
-  LayoutDashboard,
-  Settings,
-  SquareCheckBig,
-  Users,
-} from "lucide-react";
+import { File, Home, Settings, SquareCheckBig, Users } from "lucide-react";
 
 type RefineContextProps = {};
 
@@ -45,7 +38,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
   const authProvider: AuthProvider = {
     login: async ({ email, password, redirectPath }) => {
       const res = await signIn("credentials", {
-        redirect: true,
+        redirect: false,
         callbackUrl: to ? to.toString() : "/",
         email,
         password,
@@ -103,6 +96,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
       if (data?.user) {
         const { user } = data;
         return {
+          id: user.id,
           name: user.name,
           email: user.email,
           avatar: user.image,
@@ -127,21 +121,10 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
               name: "home",
               list: "/home",
               /**  create: "/lists/create",
-              edit: "/lists/edit/:id",
-              show: "/lists/show/:id", */
+              edit: "/lists/edit/:id", */
+              //show: "/lists/show/:id",
               meta: {
                 icon: <Home className="h-5 w-5" />,
-                canDelete: true,
-              },
-            },
-            {
-              name: "dashboard",
-              list: "/dashboard",
-              /**create: "/blog-posts/create",
-              edit: "/blog-posts/edit/:id",
-              show: "/blog-posts/show/:id", */
-              meta: {
-                icon: <LayoutDashboard className="h-5 w-5" />,
                 canDelete: true,
               },
             },
