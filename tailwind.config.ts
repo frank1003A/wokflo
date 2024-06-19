@@ -22,6 +22,7 @@ const config = {
         primary_text: "#5c5d5f",
       },
       colors: {
+        wk_card: "#27282c",
         wokflow_bg: "#161719",
         primary_hover: "#202125",
         border: "hsl(var(--border))",

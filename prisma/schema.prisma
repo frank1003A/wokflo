@@ -11,6 +11,7 @@ datasource db {
 model User {
   id            String         @id @default(auto()) @map("_id") @db.ObjectId
   username      String?        @unique
+  avatar        String?
   firstName     String?
   lastName      String?
   role          String?
@@ -59,12 +60,15 @@ model Project {
   id        String        @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   ownerId   String        @db.ObjectId
-  owner     User          @relation(fields: [ownerId], references: [id]) // Reference to the owner of the project
+  status    ProjectStatus @default(According_to_plan)
+  owner     User          @relation(fields: [ownerId], references: [id])
   createdAt DateTime      @default(now())
   updatedAt DateTime      @default(now())
   users     ProjectUser[]
   tasks     Task[]
   files     File[]
+  progress  String?
+  due       DateTime?
   variant   StyleVariant  @default(emoji)
   emoji     String?
   color     String?
@@ -135,6 +139,11 @@ model File {
   projectId String?  @db.ObjectId
   task      Task?    @relation(fields: [taskId], references: [id])
   project   Project? @relation(fields: [projectId], references: [id])
+}
+
+enum ProjectStatus {
+  According_to_plan
+  Completed
 }
 
 enum TaskStatus {
