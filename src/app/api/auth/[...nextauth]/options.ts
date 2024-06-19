@@ -1,11 +1,13 @@
-import { verifyPassword } from "@lib/auth";
 import prisma from "@lib/db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import bcrypt from "bcrypt";
+import { NextAuthOptions } from "next-auth";
 import Auth0Provider from "next-auth/providers/auth0";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
-const authOptions = {
+const authOptions: NextAuthOptions = {
+  session: { strategy: "jwt" },
   // Configure one or more authentication providers
   providers: [
     // !!! Should be stored in .env file.
@@ -28,14 +30,9 @@ const authOptions = {
         const user = await prisma.user.findUnique({
           where: { email: credentials?.email },
         });
+        if (user) {
+          ///await signInUser(credentials?.password as string, user.passwordHash);
 
-        if (
-          user &&
-          (await verifyPassword(
-            credentials?.password as string,
-            user.passwordHash as string
-          ))
-        ) {
           return { id: user.id, email: user.email };
         }
 
@@ -43,8 +40,29 @@ const authOptions = {
       },
     }),
   ],
+  callbacks: {
+    session: async ({ session, token }) => {
+      if (session?.user) {
+        session.user.id = token.sub!;
+      }
+      return session;
+    },
+  },
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
+};
+
+/**Handles password encryption and decryption*/
+const signInUser = async (password: string, user: any) => {
+  if (!user.password) {
+    throw new Error("invalid password");
+  }
+
+  const match = await bcrypt.compare(password, user.password);
+
+  if (!match) {
+    throw new Error("invalid email or password");
+  }
 };
 
 export default authOptions;
