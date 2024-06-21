@@ -12,7 +12,7 @@ import NewTask from "./NewTask";
 const SheetNewTask = ({ children }: { children: ReactNode }) => {
   return (
     <Sheet>
-      <SheetTrigger>{children}</SheetTrigger>
+      <SheetTrigger asChild>{children}</SheetTrigger>
       <SheetContent className="bg-wokflow_bg overflow-y-auto w-full lg:w-fit">
         <SheetHeader className="*:text-white ">
           <SheetTitle>New Task</SheetTitle>

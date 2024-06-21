@@ -40,7 +40,9 @@ export const ViewCard = ({ icon, text, value, ...rest }: ViewCardProps) => {
         <span>{icon}</span>
         <span className="text-sm capitalize">{text}</span>
       </div>
-      <div>{value}</div>
+      <span className="p-3 h-8 w-8 bg-sky-600 rounded-full text-sm flex items-center justify-center font-bold">
+        {value}
+      </span>
     </Card>
   );
 };

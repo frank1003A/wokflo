@@ -3,7 +3,6 @@ import { TabsTrigger } from "@components/ui/tabs";
 
 import HeaderComponent from "@components/HeaderComponent";
 import { ViewCard } from "@components/Shared";
-import { Separator } from "@components/ui/separator";
 import { PlusCircle } from "lucide-react";
 import { ReactNode } from "react";
 const CustomTabTrigger = ({
@@ -29,14 +28,13 @@ const ProjectsPage = () => {
   return (
     <main className="flex flex-col w-full ">
       <HeaderComponent />
-      <Separator className="bg-zinc-700" />
       <div className="h-full w-full flex flex-col px-6 lg:px-20">
         <div className="w-full my-5 lg:px-5">
-          <div>
-            <h1 className="text-white text-base font-bold">
-              Good morning, Jenny
+          <div className="w-full">
+            <h1 className="text-white text-lg font-bold">
+              Good morning, Jenny 😁
             </h1>
-            <span className="text-primary_text text-sm">
+            <span className="text-primary_text text-base">
               An aggregated view of all your data,{" "}
               <span className="underline">we&apos;d love your feedback</span>
             </span>

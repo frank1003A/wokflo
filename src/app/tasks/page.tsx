@@ -2,16 +2,7 @@ import SheetNewTask from "@components/Forms/SheetNewTask";
 import HeaderComponent from "@components/HeaderComponent";
 import TasksView from "@components/Lists/Task";
 import { ViewCard } from "@components/Shared";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@components/ui/breadcrumb";
 import { Button } from "@components/ui/button";
-import { Separator } from "@components/ui/separator";
 import { Plus, PlusCircle } from "lucide-react";
 
 const TasksList = () => {
@@ -20,30 +11,12 @@ const TasksList = () => {
       {/** Header*/}
 
       <HeaderComponent />
-      <Separator className="bg-zinc-700" />
       <main className="flex flex-col gap-4 mt-5 px-6 lg:px-24">
-        <div className=" *:text-white my-3">
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/">Dashboard</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink href="/reports">Reports</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbPage>Export</BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
         <div className="w-full">
-          <h1 className="text-white text-base font-bold">
+          <h1 className="text-white text-lg font-bold">
             Good morning, Jenny 😁
           </h1>
-          <span className="text-primary_text text-sm">
+          <span className="text-primary_text text-base">
             An aggregated view of all your data,{" "}
             <span className="underline">we&apos;d love your feedback</span>
           </span>

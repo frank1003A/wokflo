@@ -7,6 +7,7 @@ import {
 } from "@components/ui/accordion";
 import { Avatar, AvatarImage } from "@components/ui/avatar";
 import { Checkbox } from "@components/ui/checkbox";
+import { Skeleton } from "@components/ui/skeleton";
 import {
   DndContext,
   KeyboardSensor,
@@ -113,7 +114,18 @@ const TasksView = () => {
   const projects = data?.data ?? [];
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        {[1, 2, 3, 4, 5].map((no) => {
+          return (
+            <Skeleton
+              key={no}
+              className="p-2 rounded-md w-full mb-4 h-[60px] bg-zinc-700 "
+            />
+          );
+        })}
+      </>
+    );
   }
 
   if (isError) {
@@ -150,7 +162,7 @@ const TasksView = () => {
               <AccordionItem
                 key={project.name}
                 value={`item-${index + 1}`}
-                className="p-2 rounded-md w-full mb-4 border border-zinc-700 border-dashed"
+                className="p-2 rounded-md w-full mb-4 border bg-wokflow_bg border-zinc-700 border-dashed"
               >
                 <AccordionTrigger className="text-white bg-transparent border-zinc-700 py-3 px-3 rounded-tl-md rounded-tr-md hover:*:no-underline">
                   <div className="flex items-center gap-2 justify-start w-full">
@@ -165,8 +177,8 @@ const TasksView = () => {
                     <div className="ml-auto flex gap-4 px-4">
                       <div className="flex items-center space-x-2">
                         <ClipboardList />
-                        <span className="bg-white p-2 text-black rounded-full h-6 w-6 text-sm font-bold flex items-center leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          {project.tasks.length + 1}
+                        <span className="bg-white p-2 text-black rounded-full h-6 w-6 text-sm font-bold flex items-center justify-center leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                          {project.tasks.length}
                         </span>
                       </div>
                     </div>
