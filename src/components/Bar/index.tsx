@@ -78,7 +78,7 @@ const DataGroup = ({
         onClick={expand}
         className={clsx(
           "no-underline hover:bg-primary_hover items-center  text-sm capitalize text-primary_text",
-          isCollapsed ? "px-6 lg:px-3 lg:justify-center " : "px-6 justify-start"
+          isCollapsed ? "px-3 lg:px-3 lg:justify-center " : "px-6 justify-start"
         )}
       >
         <HeaderWithAction
@@ -145,127 +145,144 @@ const LeftBar = () => {
   const { menuItems, selectedKey, defaultOpenKeys } = useMenu();
 
   return (
-    <aside
-      className={clsx(
-        "transition-all h-screen overflow-y-auto scrollbar-hide max-w-[250px] w-full bg-[#161719] py-6",
-        isCollapsed ? "w-full translate-x-0 lg:w-[60px]" : "-translate-x-full",
-        "fixed lg:translate-x-0 lg:sticky lg:top-0 z-50"
-      )}
-    >
+    <>
       <div
+        onClick={expand}
         className={clsx(
-          "flex items-center justify-center",
-          isCollapsed ? "px-1" : "px-6"
+          "bg-black/40 inset-0 fixed z-50",
+          isCollapsed ? "fixed lg:hidden" : "hidden lg:hidden"
+        )}
+      ></div>
+      <aside
+        className={clsx(
+          "transition-all h-screen overflow-y-auto scrollbar-hide max-w-[250px] w-full bg-[#161719] py-6",
+          isCollapsed
+            ? "w-full translate-x-0 lg:w-[60px]"
+            : "-translate-x-full",
+          "fixed lg:translate-x-0 lg:sticky lg:top-0 z-50",
+          "border-r border-r-zinc-700 lg:border-none"
         )}
       >
-        <Link className={clsx(isCollapsed ? "hidden" : "")} href={"/"}>
-          <Image src={logo} alt="wokflo_logo" width={100} height={40} />
-        </Link>
-
-        <Button
-          variant={"ghost"}
-          size={"icon"}
-          onClick={toggleCollapsed}
+        <div
           className={clsx(
-            " hover:bg-primary_hover hover:text-sky-600 text-white",
-            isCollapsed ? "ml-0" : "ml-auto"
+            "flex items-center",
+            isCollapsed
+              ? "px-3 lg:px-3 justify-between lg:justify-center"
+              : "px-6"
           )}
         >
-          <Text />
-        </Button>
-      </div>
+          <Link
+            className={clsx(isCollapsed ? "block lg:hidden" : "block")}
+            href={"/"}
+          >
+            <Image src={logo} alt="wokflo_logo" width={100} height={40} />
+          </Link>
 
-      <ul className="flex flex-col mt-3 mb-3">
-        {menuItems.map((item, index) => {
-          return (
-            <li key={item.name}>
-              <Link
-                href={item.route as string}
-                className={clsx(
-                  "group transition-all hover:bg-primary_hover  p-3 flex items-center justify-start gap-3 text-sm capitalize text-white font-bold w-full",
-                  isCollapsed ? "px-6 lg:px-3" : "px-6",
-                  isCollapsed ? "lg:justify-center" : "justify-start",
-                  selectedKey.includes(String(item.route)) &&
-                    "bg-primary_hover text-sky-600 border-l-sky-600",
-                  "border-l-2 border-l-transparent"
-                )}
-              >
-                <div
+          <Button
+            variant={"ghost"}
+            size={"icon"}
+            onClick={toggleCollapsed}
+            className={clsx(
+              " hover:bg-primary_hover hover:text-sky-600 text-white",
+              isCollapsed ? "ml-0" : "ml-auto"
+            )}
+          >
+            <Text />
+          </Button>
+        </div>
+
+        <ul className="flex flex-col mt-3 mb-3">
+          {menuItems.map((item, index) => {
+            return (
+              <li key={item.name}>
+                <Link
+                  href={item.route as string}
                   className={clsx(
-                    "group-hover:text-sky-600 text-primary_text h-6 w-6 flex items-center justify-center",
-                    selectedKey.includes(String(item.route)) && "text-sky-600"
+                    "group transition-all hover:bg-primary_hover  p-3 flex items-center justify-start gap-3 text-sm capitalize text-white font-bold w-full",
+                    isCollapsed ? "px-3 lg:px-3" : "px-6",
+                    isCollapsed ? "lg:justify-center" : "justify-start",
+                    selectedKey.includes(String(item.route)) &&
+                      "bg-primary_hover text-sky-600 border-l-sky-600",
+                    "border-l-2 border-l-transparent"
                   )}
                 >
-                  {item.icon}
-                </div>
-                <span
-                  className={clsx(
-                    "group-hover:text-sky-600",
-                    isCollapsed ? "lg:hidden" : ""
-                  )}
-                >
-                  {item.name}
-                </span>
-              </Link>
-            </li>
-          );
-        })}
-      </ul>
-      <Separator className="border-t border-t-zinc-700" />
-      {/** Favorite */}
-      <Accordion type="single" collapsible>
-        <DataGroup
-          name="Favorite"
-          isCollapsed={isCollapsed}
-          expand={expand}
-          value="item-1"
-        >
-          <Data name="StrataScratch" isCollapsed={isCollapsed} />
-        </DataGroup>
+                  <div
+                    className={clsx(
+                      "group-hover:text-sky-600 text-primary_text h-6 w-6 flex items-center justify-center",
+                      selectedKey.includes(String(item.route)) && "text-sky-600"
+                    )}
+                  >
+                    {item.icon}
+                  </div>
+                  <span
+                    className={clsx(
+                      "group-hover:text-sky-600",
+                      isCollapsed ? "lg:hidden" : ""
+                    )}
+                  >
+                    {item.name}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+        <Separator className="border-t border-t-zinc-700" />
+        {/** Favorite */}
+        <Accordion type="single" collapsible>
+          <DataGroup
+            name="Favorite"
+            isCollapsed={isCollapsed}
+            expand={expand}
+            value="item-1"
+          >
+            <Data name="StrataScratch" isCollapsed={isCollapsed} />
+          </DataGroup>
 
-        {/** PROJECTS */}
-        <DataGroup
-          name="Projects"
-          isCollapsed={isCollapsed}
-          expand={expand}
-          hasCreateBtn
-          icon={<Plus className="h-4 w-4" />}
-          value="item-2"
-        >
-          <Data name="StrataScratch" isCollapsed={isCollapsed} />
-        </DataGroup>
+          {/** PROJECTS */}
+          <DataGroup
+            name="Projects"
+            isCollapsed={isCollapsed}
+            expand={expand}
+            hasCreateBtn
+            icon={<Plus className="h-4 w-4" />}
+            value="item-2"
+          >
+            <Data name="StrataScratch" isCollapsed={isCollapsed} />
+          </DataGroup>
 
-        {/** Channels */}
-        <DataGroup
-          name="Channels"
-          isCollapsed={isCollapsed}
-          expand={expand}
-          hasCreateBtn
-          icon={<Plus className="h-4 w-4" />}
-          value="item-3"
-        >
-          <Data name="StrataScratch" isCollapsed={isCollapsed} />
-        </DataGroup>
+          {/** Channels */}
+          <DataGroup
+            name="Channels"
+            isCollapsed={isCollapsed}
+            expand={expand}
+            hasCreateBtn
+            icon={<Plus className="h-4 w-4" />}
+            value="item-3"
+          >
+            <Data name="StrataScratch" isCollapsed={isCollapsed} />
+          </DataGroup>
 
-        {/** PORTFOLIO */}
-        <DataGroup
-          name="Portfolio"
-          isCollapsed={isCollapsed}
-          expand={expand}
-          hasCreateBtn
-          icon={<Plus className="h-4 w-4" />}
-          value="item-4"
+          {/** PORTFOLIO */}
+          <DataGroup
+            name="Portfolio"
+            isCollapsed={isCollapsed}
+            expand={expand}
+            hasCreateBtn
+            icon={<Plus className="h-4 w-4" />}
+            value="item-4"
+          >
+            <Data name="StrataScratch" isCollapsed={isCollapsed} />
+          </DataGroup>
+        </Accordion>
+        <button
+          className="bg-sky-600 w-full h-[60px] text-white"
+          onClick={() => signOut()}
         >
-          <Data name="StrataScratch" isCollapsed={isCollapsed} />
-        </DataGroup>
-      </Accordion>
-      <button
-        className="bg-sky-600 w-full h-[60px] text-white"
-        onClick={() => signOut()}
-      >
-        Log Out
-      </button>
-    </aside>
+          Log Out
+        </button>
+      </aside>
+    </>
   );
 };
 
