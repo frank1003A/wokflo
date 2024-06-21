@@ -57,22 +57,22 @@ model VerificationToken {
 }
 
 model Project {
-  id        String        @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
   description String?
-  ownerId   String        @db.ObjectId
-  status    ProjectStatus @default(According_to_plan)
-  owner     User          @relation(fields: [ownerId], references: [id])
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @default(now())
-  users     ProjectUser[]
-  tasks     Task[]
-  files     File[]
-  progress  String?
-  due       DateTime?
-  variant   StyleVariant  @default(emoji)
-  emoji     String?
-  color     String?
+  ownerId     String        @db.ObjectId
+  status      ProjectStatus @default(According_to_plan)
+  owner       User          @relation(fields: [ownerId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @default(now())
+  users       ProjectUser[]
+  tasks       Task[]
+  files       File[]
+  progress    String?
+  due         DateTime?
+  variant     StyleVariant  @default(emoji)
+  emoji       String?
+  color       String?
 }
 
 model ProjectUser {
@@ -89,18 +89,19 @@ model ProjectUser {
 }
 
 model Task {
-  id        String         @id @default(auto()) @map("_id") @db.ObjectId
-  projectId String?        @db.ObjectId // Make projectId optional
-  ownerId   String         @db.ObjectId // Add ownerId to reference the user who owns the task
-  title     String
-  status    TaskStatus     @default(PENDING)
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @default(now())
-  project   Project?       @relation(fields: [projectId], references: [id])
-  owner     User           @relation(fields: [ownerId], references: [id]) // Relation to the owner of the task
-  assignees TaskAssignee[]
-  files     File[]
-  tags      TaskTag[]
+  id          String         @id @default(auto()) @map("_id") @db.ObjectId
+  projectId   String?        @db.ObjectId // Make projectId optional
+  ownerId     String         @db.ObjectId // Add ownerId to reference the user who owns the task
+  title       String
+  description String?
+  status      TaskStatus     @default(PENDING)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @default(now())
+  project     Project?       @relation(fields: [projectId], references: [id])
+  owner       User           @relation(fields: [ownerId], references: [id]) // Relation to the owner of the task
+  assignees   TaskAssignee[]
+  files       File[]
+  tags        TaskTag[]
 }
 
 model Tag {

@@ -1,13 +1,8 @@
 "use client";
 import { IconButton } from "@components/Shared";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@components/ui/accordion";
 import { Avatar, AvatarImage } from "@components/ui/avatar";
 import { Checkbox } from "@components/ui/checkbox";
+import { ScrollArea, ScrollBar } from "@components/ui/scroll-area";
 import {
   DndContext,
   KeyboardSensor,
@@ -139,41 +134,48 @@ const TasksView = () => {
       collisionDetection={closestCenter}
       // onDragEnd={handleDragEnd}
     >
-      <Accordion type="single" collapsible>
-        {projects.map((project, index) => {
-          return (
-            <AccordionItem
-              key={project.name}
-              value={`item-${index + 1}`}
-              className="p-2 border-b-transparent rounded-md mb-4 border border-zinc-700 border-dashed"
-            >
-              <AccordionTrigger className="bg-transparent border-zinc-700 py-2 px-2 mb-2 rounded-tl-md rounded-tr-md hover:*:no-underline">
-                <div className="flex items-center gap-2 justify-start">
-                  <div className="text-white uppercase flex items-center justify-center min-w-6 w-6 h-6 rounded-sm bg-gradient-to-br from-purple-700 to-sky-300">
-                    {project.name.at(0)}
-                  </div>
-                  <span className="capitalize text-white text-lg">
-                    {project.name}
-                  </span>
+      <div className="flex gap-3 overflow-x-hidden w-[850px]">
+        <ScrollArea className="h-fit flex w-full">
+          <div className="flex gap-3">
+            {projects.map((project, index) => {
+              return (
+                <div
+                  key={project.name}
+                  //value={`item-${index + 1}`}
+                  className="py-2 rounded-md w-[400px] mb-4 border border-zinc-700 border-dashed"
+                >
+                  <header className="px-2 mx-2 bg-transparent border-zinc-700 py-2  mb-2 rounded-tl-md rounded-tr-md hover:*:no-underline">
+                    <div className="flex items-center gap-2 justify-start">
+                      <div className="text-white uppercase flex items-center justify-center min-w-6 w-6 h-6 rounded-sm bg-gradient-to-br from-purple-700 to-sky-300">
+                        {project.name.at(0)}
+                      </div>
+                      <span className="capitalize text-white text-lg">
+                        {project.name}
+                      </span>
+                    </div>
+                  </header>
+                  <main className="w-full h-[80vh] overflow-y-auto px-2">
+                    <div className="text-sm flex flex-col gap-3 px-3">
+                      {project?.tasks.map((task, id) => {
+                        return (
+                          <SortableContext
+                            key={task.title}
+                            strategy={verticalListSortingStrategy}
+                            items={project.tasks.map((task) => task.id)}
+                          >
+                            <SingleTask task={task} id={task.id} />
+                          </SortableContext>
+                        );
+                      })}
+                    </div>
+                  </main>
                 </div>
-              </AccordionTrigger>
-              <AccordionContent className="text-base flex flex-col gap-3 px-3">
-                {project?.tasks.map((task, id) => {
-                  return (
-                    <SortableContext
-                      key={task.title}
-                      strategy={verticalListSortingStrategy}
-                      items={project.tasks.map((task) => task.id)}
-                    >
-                      <SingleTask task={task} id={task.id} />
-                    </SortableContext>
-                  );
-                })}
-              </AccordionContent>
-            </AccordionItem>
-          );
-        })}
-      </Accordion>
+              );
+            })}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </div>
     </DndContext>
   );
 };

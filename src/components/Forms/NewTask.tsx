@@ -5,15 +5,14 @@ import { Input } from "@components/ui/input";
 import { Label } from "@components/ui/label";
 import { Toaster } from "@components/ui/toaster";
 import { useToast } from "@components/ui/use-toast";
-import { useCreate, useGetIdentity, useSelect } from "@refinedev/core";
+import { useCreate, useSelect } from "@refinedev/core";
 import useTaskShetStore from "@zustand/store/sheets/store";
 import clsx from "clsx";
 import React from "react";
 
 const NewTask = () => {
   const { toast } = useToast();
-  const { data: user } = useGetIdentity<{ id: string }>();
-  const { mutate: mutateTask } = useCreate();
+  const { mutate: createTask } = useCreate();
   const { options } = useSelect({
     resource: "projects",
     optionLabel: "name",
@@ -28,30 +27,31 @@ const NewTask = () => {
       tasktitle: e.currentTarget.tasktitle.value,
     };
 
-    mutateTask(
+    createTask(
       {
         resource: "/tasks",
         values: {
           title: values.tasktitle,
           projectId: value,
         },
-        successNotification: (data, values, resource) => {
+        successNotification: (data) => {
           return {
-            message: `${data?.data.id} Successfully fetched.`,
+            message: `${data?.data.id} Successfully created.`,
             description: "Success with no errors",
             type: "success",
           };
         },
       },
       {
-        onSuccess: (data, variables, context) => {
+        onSuccess: (data) => {
           toast({
-            description: `Task ${values.tasktitle} Created `,
-            className: "border text-white bg-green-700 left-12",
+            description: `Task ${data.data.id} Created `,
+            className: "border text-white bg-green-700",
+            variant: "default",
           });
           setOpen(false);
         },
-        onError(error, variables, context) {
+        onError(error) {
           toast({
             description: error.message,
             variant: "destructive",
@@ -71,6 +71,7 @@ const NewTask = () => {
       <Input
         id="tasktitle"
         type="text"
+        required
         name="tasktitle"
         placeholder="Task Tasktitle"
         className="placeholder:text-primary_text placeholder:capitalize my-3"

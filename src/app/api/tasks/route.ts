@@ -31,6 +31,7 @@ export async function POST(request: NextRequest) {
     const newTask = await prisma.task.create({
       data: { ...data, ownerId: session.user.id },
     });
+    console.log(newTask);
     return NextResponse.json(newTask);
   } catch (error) {
     console.error(error);

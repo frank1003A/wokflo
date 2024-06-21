@@ -25,7 +25,7 @@ const NewProject = () => {
 
     const values = {
       name: e.currentTarget.projectname.value,
-      description: e.currentTarget.projectdec.value,
+      description: e.currentTarget.projectdesc.value,
     };
 
     mutateProject(
