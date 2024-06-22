@@ -11,7 +11,13 @@ import routerProvider from "@refinedev/nextjs-router";
 import Loading from "@components/loading/Loading";
 import { dataProvider } from "@providers/data-provider";
 import "@styles/global.css";
-import { File, Home, Settings, SquareCheckBig, Users } from "lucide-react";
+import {
+  FolderOpenDot,
+  LayoutGrid,
+  Settings,
+  SquareCheckBig,
+  Users,
+} from "lucide-react";
 
 type RefineContextProps = {};
 
@@ -118,13 +124,13 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
           authProvider={authProvider}
           resources={[
             {
-              name: "home",
-              list: "/home",
+              name: "dashboard",
+              list: "/dashboard",
               /**  create: "/lists/create",
               edit: "/lists/edit/:id", */
               //show: "/lists/show/:id",
               meta: {
-                icon: <Home className="h-5 w-5" />,
+                icon: <LayoutGrid className="h-5 w-5" />,
                 canDelete: true,
               },
             },
@@ -135,7 +141,7 @@ const App = (props: React.PropsWithChildren<AppProps>) => {
               edit: "/categories/edit/:id",
               show: "/categories/show/:id", */
               meta: {
-                icon: <File className="h-5 w-5" />,
+                icon: <FolderOpenDot className="h-5 w-5" />,
                 canDelete: true,
               },
             },

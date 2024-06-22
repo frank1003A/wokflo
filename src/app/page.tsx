@@ -8,7 +8,7 @@ import { NavigateToResource } from "@refinedev/nextjs-router";
 export default function IndexPage() {
   return (
     <Suspense>
-      <Authenticated key="home">
+      <Authenticated key="dashboard">
         <NavigateToResource />
       </Authenticated>
     </Suspense>

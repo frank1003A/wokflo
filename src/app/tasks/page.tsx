@@ -40,7 +40,7 @@ const TasksList = () => {
             <SheetNewTask>
               <Button
                 variant={"outline"}
-                className="w-full justify-start border-dashed border-zinc-700 bg-zinc-300 my-4"
+                className="w-full justify-start border-2 border-sky-600 text-sky-600 my-4 hover:bg-sky-600 hover:text-white"
               >
                 <Plus /> New Task
               </Button>

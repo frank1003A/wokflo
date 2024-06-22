@@ -94,7 +94,7 @@ model Task {
   ownerId     String         @db.ObjectId // Add ownerId to reference the user who owns the task
   title       String
   description String?
-  status      TaskStatus     @default(PENDING)
+  status      TaskStatus     @default(todo)
   createdAt   DateTime       @default(now())
   updatedAt   DateTime       @default(now())
   project     Project?       @relation(fields: [projectId], references: [id])
@@ -149,8 +149,10 @@ enum ProjectStatus {
 }
 
 enum TaskStatus {
-  PENDING
-  COMPLETED
+  todo
+  inProgress
+  inReview
+  complete
 }
 
 enum StyleVariant {
