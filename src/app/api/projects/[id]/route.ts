@@ -15,6 +15,10 @@ export async function GET(request: Request, context: { params: Params }) {
       where: {
         id: id,
       },
+      include: {
+        tasks: true,
+        files: true,
+      },
     });
     return NextResponse.json(singleProject);
   } catch (error) {

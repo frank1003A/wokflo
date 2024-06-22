@@ -6,6 +6,7 @@ import {
   AccordionTrigger,
 } from "@components/ui/accordion";
 import { Avatar, AvatarImage } from "@components/ui/avatar";
+import { Button } from "@components/ui/button";
 import { Checkbox } from "@components/ui/checkbox";
 import { Skeleton } from "@components/ui/skeleton";
 import {
@@ -26,7 +27,12 @@ import { CSS } from "@dnd-kit/utilities";
 import { Project, Task } from "@prisma/client";
 import { AccordionItem } from "@radix-ui/react-accordion";
 import { HttpError, useList } from "@refinedev/core";
-import { ClipboardList, EllipsisVertical, GripVertical } from "lucide-react";
+import {
+  ClipboardList,
+  EllipsisVertical,
+  GripVertical,
+  Star,
+} from "lucide-react";
 
 const SingleTask = ({ task, id }: { task: Task; id: string }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -175,6 +181,9 @@ const TasksView = () => {
                       </span>
                     </div>
                     <div className="ml-auto flex gap-4 px-4">
+                      <Button variant={"ghost"} size={"icon"}>
+                        <Star />
+                      </Button>
                       <div className="flex items-center space-x-2">
                         <ClipboardList />
                         <span className="bg-white p-2 text-black rounded-full h-6 w-6 text-sm font-bold flex items-center justify-center leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">

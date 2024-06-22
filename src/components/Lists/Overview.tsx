@@ -1,31 +1,22 @@
 "use client";
 
 import { Project } from "@prisma/client";
-import { HttpError, useOne } from "@refinedev/core";
+import { GetOneResponse } from "@refinedev/core";
 import { Plus } from "lucide-react";
 
-const Overview = ({ id }: { id: string }) => {
-  const { data: singleProject, isLoading } = useOne<Project, HttpError>({
-    resource: "projects",
-    id: id,
-  });
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
+const Overview = ({
+  project: singleProject,
+}: {
+  project: GetOneResponse<Project> | undefined;
+}) => {
   return (
-    <div className="w-[70%] flex flex-col gap-8 text-white px-8 lg:px-20 py-8">
+    <div className="w-full lg:w-[70%] flex flex-col gap-8 text-white px-8 lg:px-20 py-8">
       <div>
         <h1 className="font-bold">Project info</h1>
         <p className="text-sm mt-6">
           {singleProject?.data.name} - The Place to master coding
         </p>
-        <p className="text-sm mt-5">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima
-          autem, dignissimos molestiae fugit necessitatibus quos suscipit
-          corporis.
-        </p>
+        <p className="text-sm mt-5">{singleProject?.data.description}</p>
         <div className="flex bg-zinc-800 border border-dashed border-zinc-700 mt-4 rounded-md p-4 gap-4 text-white">
           💡
           <span className="text-base text-primary_text">
